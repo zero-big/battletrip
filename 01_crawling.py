@@ -54,7 +54,7 @@ for i in range(1, 1343):
                 except:
                     print('review : ', i, j)
         df = pd.DataFrame({'title':titles, 'reviews':reviews})
-        df.to_csv('./crawling_data/MovieReview_2020/reviews_{}_{}page.csv'.format(your_year, i), index=False)
+        df.to_csv('./crawling_data/MovieReview_2020/reviews_{}.csv'.format(i), index=False)
     except:
         print('page : ', i) #몇번째 페이지에서 에러났는지
 driver.close()
