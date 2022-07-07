@@ -10,7 +10,7 @@ options.add_argument('lnag=ko_KR')
 driver = webdriver.Chrome('./chromedriver.exe', options=options)
 review_page_xpath = '//*[@id="content"]/div/div[1]/div'
 
-for i in range(1, 4):
+for i in range(1, 451):
     url = 'https://www.ybtour.co.kr/eplg/episodeList.yb?pageNo={}'.format(i)
     titles = []
     reviews = []
