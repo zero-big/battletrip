@@ -1,13 +1,18 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import pandas as pd
 from selenium.common. exceptions import NoSuchElementException
 import time
 
 
 options = webdriver.ChromeOptions()
+# options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
 options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 1})
 options.add_argument('lnag=ko_KR')
+
 driver = webdriver.Chrome('./chromedriver.exe', options=options)
+# driver.implicitly_wait(10)
+
 review_page_xpath = '//*[@id="content"]/div/div[1]/div'
 city = ['필리핀','베트남', '중국', '태국', '일본',
         '싱가포르','코타키나발루','인도','서유럽','동유럽',
@@ -17,7 +22,7 @@ city = ['필리핀','베트남', '중국', '태국', '일본',
 # review_range = driver.find_element('xpath', '//*[@id="tab_page"]/div[4]/table/tbody/tr[1]/td[1]').text
 # review_range = review_range.replace(',', '')
 # review_range = int(review_range) + 1
-for i in city[0:5]:
+for i in city[3:5]:
     url = 'https://www.ybtour.co.kr/search/searchPdt.yb?query={}&departDate=&cityList={}'.format(i,i)
     driver.get(url)
     time.sleep(2.0)
@@ -56,9 +61,9 @@ for i in city[0:5]:
             df.to_csv('./crawling_data/{}/reviews_{}.csv'.format(i, j), index=False)
         except:
             print('page', i, j)
-            driver.back()
+            driver.get(url)
             time.sleep(2.0)
-
-df.to_csv('./crawling_data/{}/reviews_{}.csv'.format(i, i), index=False)
+    df = pd.DataFrame({'title': titles, 'reviews': reviews})
+    df.to_csv('./crawling_data/{}/reviews_{}.csv'.format(i, i), index=False)
 
 driver.close()
