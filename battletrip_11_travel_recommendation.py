@@ -21,7 +21,7 @@ with open('./models/tfidf.pickle', 'rb') as f:
     Tfidf = pickle.load(f)
 
 # 영화 제목 / index를 이용
-movie_idx = df_reviews[df_reviews['country'] == '일본'].index[0]
+movie_idx = df_reviews[df_reviews['country'] == '보라카이'].index[0]
 
 cosine_sim = linear_kernel(Tfidf_matrix[movie_idx], Tfidf_matrix)
 recommendation = getRecommendation(cosine_sim)
@@ -29,7 +29,7 @@ print(recommendation[1:11])
 
 # keyword 이용
 embedding_model = Word2Vec.load('./models/word2vec_battletrip.model')
-keyword = '색다른'
+keyword = '행복'
 sim_word = embedding_model.wv.most_similar(keyword, topn=10)
 words = [keyword]
 for word, _ in sim_word:

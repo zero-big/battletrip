@@ -8,6 +8,7 @@ df_stopwords = pd.read_csv('./crawling_data/stopwords.csv')
 # 괌, 뉴질랜드, 다낭, 대만, 동유럽, 라오스, 마닐라, 미동부
 
 stopwords = list(df_stopwords['stopword'])
+
 stopwords = stopwords + ['차장님', '과장님', '매니저', '매니져', '가이드', '풍선', '노랑', '여행'
                          '노랑풍선', '상품', '덕분', '해주다', '비행기', '감사하다', '되어다',
                          '도착', '‘투어', '가다', '여행', '오다', '많다', '다녀오다',
