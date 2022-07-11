@@ -16,7 +16,7 @@ font_name = font_manager.FontProperties(
 plt.rc('font', family='NanumBarunGothic')
 
 df= pd.read_csv('./crawling_data/new_every_country_reviews.csv')
-words = df[df['country'] == '서유럽']['reviews']
+words = df[df['country'] == '코타키나발루']['reviews']
 print(words.iloc[0])
 words = words.iloc[0].split()
 print(words)

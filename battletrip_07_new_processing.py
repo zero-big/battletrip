@@ -1,7 +1,7 @@
 import pandas as pd
 from konlpy.tag import Okt
 import re
-
+import os
 okt = Okt()
 df_stopwords = pd.read_csv('./stopwords.csv')
 stopwords = list(df_stopwords['stopword'])
@@ -10,8 +10,12 @@ stopwords = stopwords + ['차장님', '과장님', '매니저', '매니져', '�
                          '노랑 풍선', '여행', '후기', '패키지', '페키지', '팀장님',
                          '캡틴', '되어다', '가다', '오다', '여행사', '리다', '우리나라',
                          '한국', '부장' '부장님', '준비', '설명', '정도', '보이', '투어',
-                         '들다', '어떻다', '이렇다', '강요', '걱정']
-df = pd.read_csv('./crawling_data/every_country_reviews.csv')
+                         '들다', '어떻다', '이렇다', '강요', '걱정', '차장님', '과장님', '매니저', '매니져', '가이드', '풍선',
+                         '노랑', '여행', '덕분', '대입', '수능', '밉다', '한국', '아르바이트', '정부', '상세', '때로는', '운전기사', '이름', '좋다',
+                         '많다', '모습', '도착', '타고', '알다', '30분', '정도', '리다', '출발', '가지', '두둥', '이동', '정도', '00']
+df = pd.read_csv('./crawling_data/new_every_country_reviews.csv')
+# df.info()
+# exit(1)
 
 cleaned_sentences = []
 for review in df.reviews:
