@@ -28,21 +28,6 @@ stopwords = stopwords + ['되어다', '가다', '나오다', '오다', '정도',
 count = 0
 cleaned_sentences = []
 for review in df.reviews:
-    # count += 1
-    # if count % 10 == 0:
-    #     print('.', end='')
-    # if count % 100 == 0:
-    #     print()
-    # review = re.sub('[^가-힣 ]', ' ', review)  # review 문장 속 한글, 띄어쓰기 제외 모두 띄어쓰기로 대체
-    # # 특정 단어로 도배된(20개 이상) 리뷰 제거(2019)
-    # review = review.split()
-    # words = []
-    # for word in review:
-    #     if len(word) > 20:
-    #         word = ' '
-    #         words.append(word)
-    # review = ' '.join(words)
-
     ## 형태소 분리
     review = re.sub('[^가-힣0-9 ]', ' ', review)
     token = okt.pos(review, stem=True)  # pos - 형태소 분리를 시켜주고 품사를 지정해서 튜플로 묶어줌
