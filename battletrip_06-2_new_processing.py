@@ -25,7 +25,6 @@ stopwords = stopwords + ['가이드님', '가이드', '인솔자', '인솔자님
 stopwords = stopwords + ['되어다', '가다', '나오다', '오다', '정도', '가지', '리다', '보이', '내내', '타고', '지다', '의하다']
 
 ## 한글 제외 모두 제거
-count = 0
 cleaned_sentences = []
 for review in df.reviews:
     ## 형태소 분리
