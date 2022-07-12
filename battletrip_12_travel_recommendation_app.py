@@ -6,6 +6,7 @@ from sklearn.metrics.pairwise import linear_kernel
 from gensim.models import Word2Vec
 from scipy.io import mmread
 import pickle
+
 from PyQt5.QtGui import QPixmap
 from konlpy.tag import Okt
 import re
@@ -27,6 +28,7 @@ class Exam(QWidget, form_window):
         self.country = list(self.df_reviews['country'])
         self.reviews = list(self.df_reviews['reviews'])
         self.country.sort()
+
         print(len(self.country),self.country)
         # exit()
         # for title in self.country:
@@ -52,6 +54,7 @@ class Exam(QWidget, form_window):
         return recMovieList
         print(recMovieList)
 
+
     def cmb_region_slot(self):
         self.cmb_region.currentText()
 
@@ -60,6 +63,7 @@ class Exam(QWidget, form_window):
 
     def cmb_who_slot(self):
         self.cmb_who.currentText()
+
 
     def recommendation_by_movie_title(self, country):
         movie_idx = self.df_reviews[self.df_reviews['country'] == country].index[0]
@@ -72,6 +76,7 @@ class Exam(QWidget, form_window):
         keywords = []
         if self.cmb_region.currentText():
             keywords.append(self.cmb_region.currentText())
+
         if self.cmb_purpose.currentText():
             keywords.append(self.cmb_purpose.currentText())
         if self.cmb_who.currentText():
@@ -144,6 +149,7 @@ class Exam(QWidget, form_window):
                 return 0
         else:
             return 0
+
 
 
 
