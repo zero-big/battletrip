@@ -10,13 +10,17 @@ from PyQt5.QtGui import QPixmap
 from konlpy.tag import Okt
 import re
 from PyQt5.QtCore import QStringListModel
+from PyQt5.QtGui import *
+import webbrowser
 
-form_window = uic.loadUiType('./travel_recommendation.ui')[0]
+form_window = uic.loadUiType('./travel_recommendation1.ui')[0]
+
 
 class Exam(QWidget, form_window):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.url = [None, None, None]
         self.Tfidf_matrix = mmread('./models/Tfidf_trip_review.mtx').tocsr()
 
         with open('./models/tfidf.pickle', 'rb') as f:
@@ -31,10 +35,18 @@ class Exam(QWidget, form_window):
         # exit()
         # for title in self.country:
         #     self.comboBox.addItem(title)
-        self.cmb_region.currentIndexChanged.connect(self.cmb_region_slot)
+        # self.cmb_region.currentIndexChanged.connect(self.cmb_region_slot)
         self.cmb_who.currentIndexChanged.connect(self.cmb_who_slot)
         self.cmb_purpose.currentIndexChanged.connect(self.cmb_purpose_slot)
         self.btn_recommendation.clicked.connect(self.btn_slot)
+
+        self.btn_item0.clicked.connect(self.web_link0_slot)
+        self.btn_item1.clicked.connect(self.web_link1_slot)
+        self.btn_item2.clicked.connect(self.web_link2_slot)
+
+        img = QPixmap('./crawling_data/ticket1.jpg') # 배경이미지
+        self.background.setPixmap(img)
+
 
     def getRecommendation(self, cosine_sim):
         print('debug12')
@@ -52,8 +64,8 @@ class Exam(QWidget, form_window):
         return recMovieList
         print(recMovieList)
 
-    def cmb_region_slot(self):
-        self.cmb_region.currentText()
+    # def cmb_region_slot(self):
+    #     self.cmb_region.currentText()
 
     def cmb_purpose_slot(self):
         self.cmb_purpose.currentText()
@@ -68,10 +80,20 @@ class Exam(QWidget, form_window):
         recommendation = '\n'.join(list(recommendation[1:]))
         return recommendation
 
+    def web_link0_slot(self):
+        if self.url[0]:
+            webbrowser.open(self.url[0])
+    def web_link1_slot(self):
+        if self.url[1]:
+            webbrowser.open(self.url[1])
+    def web_link2_slot(self):
+        if self.url[2]:
+            webbrowser.open(self.url[2])
+
     def btn_slot(self):
         keywords = []
-        if self.cmb_region.currentText():
-            keywords.append(self.cmb_region.currentText())
+        # if self.cmb_region.currentText():
+        #     keywords.append(self.cmb_region.currentText())
         if self.cmb_purpose.currentText():
             keywords.append(self.cmb_purpose.currentText())
         if self.cmb_who.currentText():
@@ -90,24 +112,29 @@ class Exam(QWidget, form_window):
         self.lbl_recommendation3.setText(recommendation[2])
         print(recommendation)
 
+
         pixmap = []
+
+
         for i in range(0, 3):
             print(i)
             pixmap.append(QPixmap('./IMG/{}.png'.format(recommendation[i])))
-            # self.lbl_recommendation1.setPixmap(pixmap[i])
+            self.url[i] = 'https://www.ybtour.co.kr/search/searchPdt.yb?query={}&departDate=&cityList='.format(recommendation[i])
         # pixmap1 = QPixmap('./IMG/image.png')
         # pixmap2 = QPixmap('./IMG/image (1).png')
         # pixmap3 = QPixmap('./IMG/image (2).png')
+
         self.lbl_recommendation1.setPixmap(pixmap[0])
         self.lbl_recommendation2.setPixmap(pixmap[1])
         self.lbl_recommendation3.setPixmap(pixmap[2])
+
 
 
     def recommendation_by_keyword(self, keyword):
         if keyword:
             try:
                 keyword = keyword.split()
-                lb_keyword = keyword[3]
+                lb_keyword = keyword[2]
                 print(lb_keyword)
                 sim_word = self.embedding_model.wv.most_similar(lb_keyword, topn=10)
                 words = [lb_keyword]
@@ -125,7 +152,9 @@ class Exam(QWidget, form_window):
                 # cosine_sim = linear_kernel(sentence_vec, self.Tfidf_matrix)
                 # recommend = self.getRecommendation(cosine_sim)
 
-                cleaned_sentence = [keyword[0]]*5 + [keyword[1]] + [keyword[2]] + [sentence]
+                # cleaned_sentence = [keyword[0]]*1 + [keyword[1]]*1 + [keyword[2]]*15 + [sentence]
+                cleaned_sentence = [keyword[0]]*5 + [keyword[1]]*70 + [sentence]
+
                 cleaned_sentence = ' '.join(cleaned_sentence)
                 print(cleaned_sentence)
                 print('debug02')
