@@ -9,28 +9,28 @@ from gensim.models import Word2Vec
 def getRecommendation(cosin_sim):
     simScore = list(enumerate(cosin_sim[-1]))
     simScore = sorted(simScore, key=lambda x:x[1], reverse=True)
-    simScore = simScore[:11]
-    movieIdx = [i[0] for i in simScore]
-    recMovieList = df_reviews.iloc[movieIdx, 0]
-    return recMovieList
+    simScore = simScore[:4]
+    tripIdx = [i[0] for i in simScore]
+    recpointList = df_reviews.iloc[tripIdx, 0]
+    return recpointList
 
 
 df_reviews = pd.read_csv('./crawling_data/new_every_country_reviews.csv')
-Tfidf_matrix = mmread('./models/Tfidf_movie_review.mtx').tocsr()
+Tfidf_matrix = mmread('./models/Tfidf_trip_review.mtx').tocsr()
 with open('./models/tfidf.pickle', 'rb') as f:
     Tfidf = pickle.load(f)
 
 # 영화 제목 / index를 이용
-movie_idx = df_reviews[df_reviews['country'] == '보라카이'].index[0]
+trip_idx = df_reviews[df_reviews['country'] == '보라카이'].index[0]
 
-cosine_sim = linear_kernel(Tfidf_matrix[movie_idx], Tfidf_matrix)
+cosine_sim = linear_kernel(Tfidf_matrix[trip_idx], Tfidf_matrix)
 recommendation = getRecommendation(cosine_sim)
 print(recommendation[1:11])
 
 # keyword 이용
 embedding_model = Word2Vec.load('./models/word2vec_battletrip.model')
 keyword = '행복'
-sim_word = embedding_model.wv.most_similar(keyword, topn=10)
+sim_word = embedding_model.wv.most_similar(keyword, topn=3)
 words = [keyword]
 for word, _ in sim_word:
     words.append(word)

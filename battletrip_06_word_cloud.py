@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
-font_path = './malgun.ttf'
+font_path = 'crawling_data/malgun.ttf'
 font_name = font_manager.FontProperties(
     fname=font_path).get_name()
 plt.rc('font', family='NanumBarunGothic')

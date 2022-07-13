@@ -15,4 +15,4 @@ print(Tfidf_matrix[0].shape)
 with open('./models/tfidf.pickle', 'wb') as f:
     pickle.dump(Tfidf, f)
 
-mmwrite('./models/Tfidf_movie_review.mtx', Tfidf_matrix)
+mmwrite('./models/Tfidf_trip_review.mtx', Tfidf_matrix)

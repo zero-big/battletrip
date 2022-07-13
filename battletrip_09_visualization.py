@@ -5,7 +5,7 @@ from sklearn.manifold import TSNE
 from matplotlib import font_manager, rc
 import matplotlib as mpl
 import os
-font_path = './malgun.ttf'
+font_path = 'crawling_data/malgun.ttf'
 font_name = font_manager.FontProperties(fname=font_path).get_name()
 mpl.rcParams['axes.unicode_minus']=False
 rc('font', family=font_name)
